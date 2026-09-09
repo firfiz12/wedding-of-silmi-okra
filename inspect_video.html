@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Inspect Video & Pages</title>
+  <style>
+    body { font-family: sans-serif; background: #222; color: #fff; padding: 20px; }
+    .container { display: flex; gap: 20px; flex-wrap: wrap; }
+    video { width: 360px; height: 640px; background: #000; }
+    .gallery { display: flex; gap: 10px; overflow-x: auto; max-width: 100%; }
+    .gallery img { height: 300px; border: 1px solid #555; }
+    .controls { margin-top: 10px; }
+    button { padding: 8px 16px; margin: 4px; cursor: pointer; }
+    #info { margin-top: 10px; font-family: monospace; white-space: pre; }
+  </style>
+</head>
+<body>
+  <h2>Reference Video & 8 Pages</h2>
+  <div class="container">
+    <div>
+      <video id="v" src="THESE KIDS ARE GETTING MARRIED!.mp4" muted controls playsinline></video>
+      <div class="controls">
+        <button onclick="seek(0)">0s (Start)</button>
+        <button onclick="seek(1)">1s</button>
+        <button onclick="seek(2)">2s</button>
+        <button onclick="seek(3)">3s</button>
+        <button onclick="seek(4)">4s</button>
+        <button onclick="seek(5)">5s</button>
+        <button onclick="seek(6)">6s</button>
+        <button onclick="seek(8)">8s</button>
+        <button onclick="seek(10)">10s</button>
+        <button onclick="seek(12)">12s</button>
+        <button onclick="seek(15)">15s</button>
+        <button onclick="seek(20)">20s</button>
+      </div>
+      <div id="info"></div>
+    </div>
+    <div>
+      <h3>Full Pages Preview (1 to 8)</h3>
+      <div class="gallery">
+        <img src="file_svg/1_full.png" title="Page 1">
+        <img src="file_svg/2_full.png" title="Page 2">
+        <img src="file_svg/3_full.png" title="Page 3">
+        <img src="file_svg/4_full.png" title="Page 4">
+        <img src="file_svg/5_full.png" title="Page 5">
+        <img src="file_svg/6_full.png" title="Page 6">
+        <img src="file_svg/7_full.png" title="Page 7">
+        <img src="file_svg/8_full.png" title="Page 8">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const v = document.getElementById('v');
+    const info = document.getElementById('info');
+    function updateInfo() {
+      info.textContent = `Time: ${v.currentTime.toFixed(2)}s / ${v.duration.toFixed(2)}s | Width: ${v.videoWidth}x${v.videoHeight}`;
+    }
+    v.addEventListener('timeupdate', updateInfo);
+    v.addEventListener('loadedmetadata', updateInfo);
+    function seek(t) {
+      v.currentTime = t;
+    }
+  </script>
+</body>
+</html>

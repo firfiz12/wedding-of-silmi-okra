@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Undangan Pernikahan Silmi & Okra - 11 Oktober 2026. Merayakan hari bahagia kami bersama keluarga dan sahabat.">
+  <title>The Wedding of Silmi & Okra | 11.10.2026</title>
+  
+  <!-- GSAP Animation Engine & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Audio Background Player -->
+  <audio id="bg-audio" loop preload="auto">
+    <source src="music/backsound.mpeg" type="audio/mpeg">
+  </audio>
+
+  <!-- Floating Audio Control Disc -->
+  <div id="floating-audio" class="floating-audio hidden" title="Putar / Jeda Musik">
+    <div class="disc-wrapper">
+      <div class="disc-vinyl">
+        <i class="fa-solid fa-compact-disc"></i>
+      </div>
+      <div class="disc-indicator">
+        <i class="fa-solid fa-music"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden" role="alert">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toast-text">Berhasil disalin!</span>
+  </div>
+
+  <!-- Mobile 9:16 Frame Wrapper -->
+  <div class="site-wrapper">
+
+    <!-- ================= SECTION 1: COVER OVERLAY (PECAHAN PNG) ================= -->
+    <section class="section-visual invitation-container cover-container" id="cover">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/1_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/03_gambar_elemen.png" class="layer layer-art p1-couple-sign" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/04_gambar_elemen.png" class="layer layer-art p1-paper-curl" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/05_gambar_elemen.png" class="layer layer-art p1-ribbon" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/06_gambar_elemen.png" class="layer layer-art p1-head-okra" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/07_gambar_elemen.png" class="layer layer-art p1-head-silmi" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/08_gambar_elemen.png" class="layer layer-art p1-btn-envelope" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/09_teks_paragraf.png" class="layer layer-text title-layer p1-title" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/10_teks_paragraf.png" class="layer layer-text p1-bodies" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/11_teks_paragraf.png" class="layer layer-text p1-stars-left" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/12_teks_paragraf.png" class="layer layer-text p1-stars-right" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/13_teks_paragraf.png" class="layer layer-text p1-date" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/14_teks_paragraf.png" class="layer layer-text p1-recip-label" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/15_teks_paragraf.png" class="layer layer-text p1-recip-name" loading="eager" alt="" />
+      <img src="file_svg/1_elemen_png/16_teks_paragraf.png" class="layer layer-text p1-btn-open" loading="eager" alt="" />
+      <!-- Hotspot Tombol Buka Undangan -->
+      <button class="hotspot-btn hotspot-open" id="btn-open-invitation" aria-label="Buka Undangan"></button>
+    </section>
+
+    <!-- ================= INNER CONTENT ================= -->
+    <main class="inner-content" id="inner-content">
+
+      <!-- ================= SECTION 2: MEMPELAI & AYAT (PECAHAN PNG) ================= -->
+      <section class="section-visual invitation-container page-section" id="page-2">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/2_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p2-el p2-el-1" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/03_gambar_elemen.png" class="layer layer-art p2-el p2-el-2" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/04_gambar_elemen.png" class="layer layer-art p2-el p2-el-3" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/05_gambar_elemen.png" class="layer layer-art p2-el p2-el-4" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/06_teks_paragraf.png" class="layer layer-text p2-el p2-el-5" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/07_teks_paragraf.png" class="layer layer-text p2-el p2-el-6" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/08_teks_paragraf.png" class="layer layer-text p2-el p2-el-7" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/09_teks_paragraf.png" class="layer layer-text p2-el p2-el-8" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/10_teks_paragraf.png" class="layer layer-text p2-el p2-el-9" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/11_teks_paragraf.png" class="layer layer-text p2-el p2-el-10" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/12_teks_paragraf.png" class="layer layer-text p2-el p2-el-11" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/13_teks_paragraf.png" class="layer layer-text p2-el p2-el-12" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/14_teks_paragraf.png" class="layer layer-text p2-el p2-el-13" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/15_teks_paragraf.png" class="layer layer-text p2-el p2-el-14" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/16_teks_paragraf.png" class="layer layer-text p2-el p2-el-15" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/17_teks_paragraf.png" class="layer layer-text p2-el p2-el-16" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/18_teks_paragraf.png" class="layer layer-text p2-el p2-el-17" loading="lazy" alt="" />
+      <img src="file_svg/2_elemen_png/19_teks_paragraf.png" class="layer layer-text p2-el p2-el-18" loading="lazy" alt="" />
+      </section>
+
+      <!-- ================= SECTION 3: SAVE THE DATE & DYNAMIC COUNTDOWN ================= -->
+      <section class="section-visual invitation-container page-section" id="page-3">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/3_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p3-el p3-el-1" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/04_gambar_elemen.png" class="layer layer-art p3-el p3-el-3" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/05_gambar_elemen.png" class="layer layer-art p3-el p3-el-4" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/06_teks_paragraf.png" class="layer layer-text p3-el p3-el-5" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/07_teks_paragraf.png" class="layer layer-text p3-el p3-el-6" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/08_teks_paragraf.png" class="layer layer-text p3-el p3-el-7" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/09_teks_paragraf.png" class="layer layer-text p3-el p3-el-8" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/10_teks_paragraf.png" class="layer layer-text p3-el p3-el-9" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/11_teks_paragraf.png" class="layer layer-text p3-el p3-el-10" loading="lazy" alt="" />
+      <img src="file_svg/3_elemen_png/12_teks_paragraf.png" class="layer layer-text p3-el p3-el-11" loading="lazy" alt="" />
+        <!-- Section Countdown Timer Dinamis (HTML Dinamis + Font Lucu) -->
+        <div class="countdown-section transparent-bg" id="countdown-timer">
+          <div class="timer-box cute-font">
+            <div class="time-item">
+              <span id="days" class="time-number">00</span>
+              <span class="time-label">Hari</span>
+            </div>
+            <div class="time-divider">:</div>
+            <div class="time-item">
+              <span id="hours" class="time-number">00</span>
+              <span class="time-label">Jam</span>
+            </div>
+            <div class="time-divider">:</div>
+            <div class="time-item">
+              <span id="minutes" class="time-number">00</span>
+              <span class="time-label">Mnt</span>
+            </div>
+            <div class="time-divider">:</div>
+            <div class="time-item">
+              <span id="seconds" class="time-number">00</span>
+              <span class="time-label">Dtk</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 4: LOCATION / LOKASI ACARA ================= -->
+      <section class="section-visual invitation-container page-section" id="page-4">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/4_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p4-el p4-el-1" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/03_teks_paragraf.png" class="layer layer-text p4-el p4-el-2" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/04_teks_paragraf.png" class="layer layer-text p4-el p4-el-3" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/05_teks_paragraf.png" class="layer layer-text p4-el p4-el-4" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/06_teks_paragraf.png" class="layer layer-text p4-el p4-el-5" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/07_teks_paragraf.png" class="layer layer-text p4-el p4-el-6" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/08_teks_paragraf.png" class="layer layer-text p4-el p4-el-7" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/09_teks_paragraf.png" class="layer layer-text p4-el p4-el-8" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/10_teks_paragraf.png" class="layer layer-text p4-el p4-el-9" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/11_teks_paragraf.png" class="layer layer-text p4-el p4-el-10" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/12_teks_paragraf.png" class="layer layer-text p4-el p4-el-11" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/13_teks_paragraf.png" class="layer layer-text p4-el p4-el-12" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/14_teks_paragraf.png" class="layer layer-text p4-el p4-el-13" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/15_teks_paragraf.png" class="layer layer-text p4-el p4-el-14" loading="lazy" alt="" />
+      <img src="file_svg/4_elemen_png/16_teks_paragraf.png" class="layer layer-text p4-el p4-el-15" loading="lazy" alt="" />
+        <!-- Hotspot Buka Google Maps -->
+        <a href="https://maps.google.com/?q=Kampung+Makan+Joglo+Jakarta+Barat" target="_blank" rel="noopener noreferrer" class="hotspot-btn hotspot-location" aria-label="Buka Peta Google Maps"></a>
+      </section>
+
+      <!-- ================= SECTION 5: WEDDING GIFT / TANDA KASIH ================= -->
+      <section class="section-visual invitation-container page-section" id="page-5">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/5_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p5-el p5-el-1" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/03_gambar_elemen.png" class="layer layer-art p5-el p5-el-2" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/04_gambar_elemen.png" class="layer layer-art p5-el p5-el-3" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/05_teks_paragraf.png" class="layer layer-text p5-el p5-el-4" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/06_teks_paragraf.png" class="layer layer-text p5-el p5-el-5" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/07_teks_paragraf.png" class="layer layer-text p5-el p5-el-6" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/08_teks_paragraf.png" class="layer layer-text p5-el p5-el-7" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/09_teks_paragraf.png" class="layer layer-text p5-el p5-el-8" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/10_teks_paragraf.png" class="layer layer-text p5-el p5-el-9" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/11_teks_paragraf.png" class="layer layer-text p5-el p5-el-10" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/12_teks_paragraf.png" class="layer layer-text p5-el p5-el-11" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/13_teks_paragraf.png" class="layer layer-text p5-el p5-el-12" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/14_teks_paragraf.png" class="layer layer-text p5-el p5-el-13" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/15_teks_paragraf.png" class="layer layer-text p5-el p5-el-14" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/16_teks_paragraf.png" class="layer layer-text p5-el p5-el-15" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/17_teks_paragraf.png" class="layer layer-text p5-el p5-el-16" loading="lazy" alt="" />
+      <img src="file_svg/5_elemen_png/18_teks_paragraf.png" class="layer layer-text p5-el p5-el-17" loading="lazy" alt="" />
+        <!-- Hotspot Salin Rekening BCA -->
+        <button type="button" class="hotspot-btn hotspot-copy-bca" onclick="copyAccount('4190221046', 'Nomor Rekening BCA')" aria-label="Salin Rekening BCA"></button>
+        <!-- Hotspot Salin Rekening Mandiri / BSI -->
+        <button type="button" class="hotspot-btn hotspot-copy-mandiri" onclick="copyAccount('7185383247', 'Nomor Rekening Silmi Kaffah')" aria-label="Salin Rekening"></button>
+        <!-- Hotspot WhatsApp Konfirmasi -->
+        <a href="https://wa.me/6281234567890?text=Halo%20Silmi%20%26%20Okra,%20saya%20ingin%20konfirmasi%20tanda%20kasih%20hadiah%20pernikahan." target="_blank" rel="noopener noreferrer" class="hotspot-btn hotspot-whatsapp" aria-label="Konfirmasi via WhatsApp"></a>
+      </section>
+
+      <!-- ================= SECTION 6: LOVE STORY / FOTO ================= -->
+      <section class="section-visual invitation-container page-section" id="page-6">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/6_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p6-el p6-el-1" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/03_gambar_elemen.png" class="layer layer-art p6-el p6-el-2" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/04_gambar_elemen.png" class="layer layer-art p6-el p6-el-3" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/05_gambar_elemen.png" class="layer layer-art p6-el p6-el-4" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/06_gambar_elemen.png" class="layer layer-art p6-el p6-el-5" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/07_teks_paragraf.png" class="layer layer-text p6-el p6-el-6" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/08_teks_paragraf.png" class="layer layer-text p6-el p6-el-7" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/09_teks_paragraf.png" class="layer layer-text p6-el p6-el-8" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/10_teks_paragraf.png" class="layer layer-text p6-el p6-el-9" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/11_teks_paragraf.png" class="layer layer-text p6-el p6-el-10" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/12_teks_paragraf.png" class="layer layer-text p6-el p6-el-11" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/13_teks_paragraf.png" class="layer layer-text p6-el p6-el-12" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/14_teks_paragraf.png" class="layer layer-text p6-el p6-el-13" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/15_teks_paragraf.png" class="layer layer-text p6-el p6-el-14" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/16_teks_paragraf.png" class="layer layer-text p6-el p6-el-15" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/17_teks_paragraf.png" class="layer layer-text p6-el p6-el-16" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/18_teks_paragraf.png" class="layer layer-text p6-el p6-el-17" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/19_teks_paragraf.png" class="layer layer-text p6-el p6-el-18" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/20_teks_paragraf.png" class="layer layer-text p6-el p6-el-19" loading="lazy" alt="" />
+      <img src="file_svg/6_elemen_png/21_teks_paragraf.png" class="layer layer-text p6-el p6-el-20" loading="lazy" alt="" />
+      </section>
+
+      <!-- ================= SECTION 7: RSVP (TULISAN HTML MURNI + LOCAL FONT) ================= -->
+      <section class="section-rsvp page-section" id="page-7">
+      <img src="file_svg/7_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p7-el p7-el-1" loading="lazy" alt="" />
+        <div class="rsvp-card-container">
+          <div class="rsvp-card">
+            <div class="rsvp-header">
+              <h2 class="rsvp-title cute-font">RSVP</h2>
+              <p class="rsvp-subtitle cute-font">Konfirmasi kehadiran Anda dan berikan doa restu</p>
+            </div>
+
+            <!-- Section RSVP Form Murni -->
+            <form id="rsvp-form" class="custom-font-style" onsubmit="handleRsvp(event)">
+              <div class="form-group">
+                <label for="rsvp-name" class="cute-font">Nama Tamu</label>
+                <input type="text" id="rsvp-name" placeholder="Masukkan nama Anda..." required autocomplete="name" />
+              </div>
+
+              <div class="form-group">
+                <label for="rsvp-status" class="cute-font">Konfirmasi Kehadiran</label>
+                <select id="rsvp-status" required>
+                  <option value="Hadir">Hadir</option>
+                  <option value="Ragu-ragu">Ragu-ragu</option>
+                  <option value="Maaf, Tidak Bisa Hadir">Maaf, Tidak Bisa Hadir</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="rsvp-msg" class="cute-font">Ucapan &amp; Doa</label>
+                <textarea id="rsvp-msg" placeholder="Tuliskan ucapan dan doa restu..." rows="3" required></textarea>
+              </div>
+
+              <button type="submit" class="rsvp-submit-btn cute-font" id="btn-submit-rsvp">
+                <span>Kirim Konfirmasi</span>
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </form>
+
+            <!-- Live Guest Wishes Board -->
+            <div class="wishes-section">
+              <div class="wishes-heading cute-font">
+                <i class="fa-solid fa-heart"></i>
+                <span>Ucapan &amp; Doa Restu (<span id="wishes-count">3</span>)</span>
+              </div>
+              <div class="wishes-list" id="wishes-list">
+                <div class="wish-item">
+                  <div class="wish-header">
+                    <strong class="wish-author cute-font">Keluarga Besar Bpk. Ahmad</strong>
+                    <span class="wish-badge badge-hadir">Hadir</span>
+                  </div>
+                  <p class="wish-text">Selamat menempuh hidup baru Silmi &amp; Okra! Semoga menjadi keluarga sakinah mawaddah warahmah, dilimpahi berkah selalu.</p>
+                  <span class="wish-time">10 menit yang lalu</span>
+                </div>
+                <div class="wish-item">
+                  <div class="wish-header">
+                    <strong class="wish-author cute-font">Rian &amp; Dhea</strong>
+                    <span class="wish-badge badge-hadir">Hadir</span>
+                  </div>
+                  <p class="wish-text">Happy wedding Silmi &amp; Okra! Bahagia terus sampai kakek nenek, lancar terus acaranya nanti!</p>
+                  <span class="wish-time">1 jam yang lalu</span>
+                </div>
+                <div class="wish-item">
+                  <div class="wish-header">
+                    <strong class="wish-author cute-font">Nadia Putri</strong>
+                    <span class="wish-badge badge-hadir">Hadir</span>
+                  </div>
+                  <p class="wish-text">Barakallahu lakuma wa baraka alaikuma wa jama'a bainakuma fii khair. Turut berbahagia untuk kalian berdua!</p>
+                  <span class="wish-time">3 jam yang lalu</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= SECTION 8: PENUTUP (PECAHAN PNG) ================= -->
+      <section class="section-visual invitation-container page-section" id="page-8">
+      <!-- 01_gambar_elemen.png (transparent base) -->
+      <img src="file_svg/8_elemen_png/02_gambar_elemen.png" class="layer layer-art bg-layer bg-paper p8-el p8-el-1" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/03_gambar_elemen.png" class="layer layer-art p8-el p8-el-2" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/04_teks_paragraf.png" class="layer layer-text p8-el p8-el-3" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/05_teks_paragraf.png" class="layer layer-text p8-el p8-el-4" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/06_teks_paragraf.png" class="layer layer-text p8-el p8-el-5" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/07_teks_paragraf.png" class="layer layer-text p8-el p8-el-6" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/08_teks_paragraf.png" class="layer layer-text p8-el p8-el-7" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/09_teks_paragraf.png" class="layer layer-text p8-el p8-el-8" loading="lazy" alt="" />
+      <img src="file_svg/8_elemen_png/10_teks_paragraf.png" class="layer layer-text p8-el p8-el-9" loading="lazy" alt="" />
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Navigasi Halaman (auto-hide, muncul saat klik / sentuh / scroll) -->
+  <nav class="nav-dock" id="nav-dock" aria-label="Navigasi Halaman">
+    <div class="nav-dock-inner" id="nav-dock-inner"></div>
+  </nav>
+
+  <!-- Custom Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
