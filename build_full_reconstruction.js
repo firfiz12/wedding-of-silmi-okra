@@ -169,7 +169,7 @@ ${page5Imgs}
         <!-- Hotspot Salin Rekening Mandiri / BSI -->
         <button type="button" class="hotspot-btn hotspot-copy-mandiri" onclick="copyAccount('7185383247', 'Nomor Rekening Silmi Kaffah')" aria-label="Salin Rekening"></button>
         <!-- Hotspot WhatsApp Konfirmasi -->
-        <a href="https://wa.me/6281234567890?text=Halo%20Silmi%20%26%20Okra,%20saya%20ingin%20konfirmasi%20tanda%20kasih%20hadiah%20pernikahan." target="_blank" rel="noopener noreferrer" class="hotspot-btn hotspot-whatsapp" aria-label="Konfirmasi via WhatsApp"></a>
+        <a href="https://wa.me/6282333840722?text=Halo%20Silmi%20%26%20Okra,%20saya%20ingin%20konfirmasi%20tanda%20kasih%20hadiah%20pernikahan." target="_blank" rel="noopener noreferrer" class="hotspot-btn hotspot-whatsapp" aria-label="Konfirmasi via WhatsApp"></a>
       </section>
 
       <!-- ================= SECTION 6: LOVE STORY / FOTO ================= -->

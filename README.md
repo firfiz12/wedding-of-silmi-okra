@@ -70,7 +70,7 @@ Anda dapat mengganti lagu pernikahan dengan salah satu cara berikut:
 Buka [index.html](file:///d:/apps/Undangan%20silmi-okra/index.html) pada bagian **SECTION 5: WEDDING GIFT**:
 - Ganti nomor rekening BCA pada teks `<div class="bank-account-num">` dan pada fungsi `onclick="copyToClipboard('11223344', 'Nomor rekening BCA')"`
 - Ganti nomor rekening Mandiri pada teks `<div class="bank-account-num">` dan pada fungsi `onclick="copyToClipboard('11223344', 'Nomor rekening Mandiri')"`
-- Ganti nomor WhatsApp pada tautan `https://wa.me/6281234567890`.
+- Ganti nomor WhatsApp pada tautan `https://wa.me/6282333840722`.
 
 ### 4. Mengirim Undangan dengan Nama Tamu Berbeda
 Cukup tambahkan parameter `?to=Nama+Tamu` di akhir URL link undangan:
