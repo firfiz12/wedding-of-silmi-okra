@@ -178,7 +178,7 @@ body.locked .inner-content {
   max-width: 78%;
   font-family: var(--font-cute);
   color: #BD0000;
-  font-size: clamp(18px, 6.2vw, 34px);
+  font-size: clamp(15px, 4.8vw, 26px);
   line-height: 1.12;
 }
 
