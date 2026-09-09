@@ -442,6 +442,7 @@ function initNavigationDock() {
     btn.innerHTML = `<span class="nav-dock-icon"><i class="fa-solid ${sec.icon}"></i></span><span class="nav-dock-label">${sec.label}</span>`;
 
     btn.addEventListener('click', () => {
+      setActive(sec.id);
       const target = document.getElementById(sec.id);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -486,38 +487,43 @@ function initNavigationDock() {
     }, { passive: true });
   });
 
-  // Scroll-spy: highlight section yang sedang terlihat
+  // Set item navigasi aktif (ikon & label berwarna tema)
+  function setActive(id) {
+    items.forEach(btn => btn.classList.toggle('active', btn.dataset.target === id));
+  }
+
+  // Scroll-spy: section yang bagian atasnya paling baru melewati tengah layar
   function updateActive() {
-    const probe = document.getElementById('page-2');
-    const offsetY = probe ? probe.offsetHeight * 0.35 : 150;
+    const scanLine = window.innerHeight * 0.5;
     let currentId = 'cover';
+    let best = -Infinity;
 
     sections.forEach(sec => {
       const el = document.getElementById(sec.id);
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      // Elemen paling atas yang sudah melewati offset => aktif
-      if (rect.top <= offsetY && rect.bottom >= offsetY) {
+      if (rect.top <= scanLine && rect.top > best) {
+        best = rect.top;
         currentId = sec.id;
       }
     });
 
-    items.forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.target === currentId);
+    setActive(currentId);
+  }
+
+  // Jadwalkan scroll-spy via rAF agar ringan
+  let spyTicking = false;
+  function scheduleSpy() {
+    if (spyTicking) return;
+    spyTicking = true;
+    requestAnimationFrame(() => {
+      spyTicking = false;
+      updateActive();
     });
   }
 
-  if (typeof ScrollTrigger !== 'undefined') {
-    if (typeof gsap !== 'undefined') gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.create({
-      trigger: document.body,
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: updateActive
-    });
-  } else {
-    window.addEventListener('scroll', updateActive, { passive: true });
-  }
+  window.addEventListener('scroll', scheduleSpy, { passive: true });
+  window.addEventListener('resize', scheduleSpy, { passive: true });
 
   updateActive();
 }
