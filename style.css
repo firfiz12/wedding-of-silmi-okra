@@ -73,7 +73,14 @@ body.locked .site-wrapper {
 }
 
 body.locked .cover-container {
+  flex: none;
   margin: auto 0;
+}
+
+body.locked .inner-content {
+  flex: 0 0 0;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .cute-font, .custom-font-style {
