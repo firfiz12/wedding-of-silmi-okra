@@ -68,6 +68,7 @@ function initCoverAnimation() {
 
   const ctx = gsap.context(() => {
     const tl = gsap.timeline({ delay: 0.15 });
+    tl.timeScale(1.2);
 
     tl
       // --- Kondisi awal (set di awal timeline agar restart selalu bersih) ---
@@ -309,7 +310,7 @@ function initScrollAnimations() {
       if (card) {
         gsap.fromTo(card,
           { opacity: 0, y: 60, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: 'power2.out', clearProps: 'transform,opacity' }
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: 'power2.out', clearProps: 'transform,opacity' }
         );
       }
       return;
@@ -320,7 +321,7 @@ function initScrollAnimations() {
     if (artLayers.length > 0) {
       gsap.fromTo(artLayers,
         { opacity: 0, scale: 0.92, transformOrigin: '50% 50%' },
-        { opacity: 1, scale: 1, duration: 0.7, stagger: 0.08, ease: 'back.out(1.6)', clearProps: 'transform,opacity' }
+        { opacity: 1, scale: 1, duration: 0.5, stagger: 0.06, ease: 'power2.out', clearProps: 'transform,opacity' }
       );
     }
 
@@ -329,7 +330,7 @@ function initScrollAnimations() {
     if (textLayers.length > 0) {
       gsap.fromTo(textLayers,
         { opacity: 0, x: -70 },
-        { opacity: 1, x: 0, duration: 1.1, stagger: 0.15, ease: 'power2.out', clearProps: 'transform,opacity' }
+        { opacity: 1, x: 0, duration: 0.8, stagger: 0.1, ease: 'power2.out', clearProps: 'transform,opacity' }
       );
     }
 
@@ -338,7 +339,7 @@ function initScrollAnimations() {
     if (countdown) {
       gsap.fromTo(countdown,
         { opacity: 0, y: 40, scale: 0.92, transformOrigin: '50% 50%' },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'back.out(1.4)', clearProps: 'transform,opacity' }
+        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: 'power2.out', clearProps: 'transform,opacity' }
       );
     }
   }
@@ -349,31 +350,47 @@ function initScrollAnimations() {
   if (coverEl) targets.push(coverEl);
   document.querySelectorAll('.page-section').forEach(el => targets.push(el));
 
-  // Halaman yang sudah dimainkan animasinya pada perjalanan scroll ini
-  const shown = new WeakSet();
+  // Halaman yang animasinya sudah/kondisi replay
+  const played = new WeakSet();
+  let lastPlay = 0;
 
-  function isOnScreen(el) {
+  // Bagian tengah halaman sudah masuk layar => siap diputar
+  function isMidVisible(el) {
     const rect = el.getBoundingClientRect();
-    return rect.bottom > 0 && rect.top < window.innerHeight * 0.85;
+    const mid = rect.top + rect.height / 2;
+    return mid > 0 && mid < window.innerHeight;
+  }
+
+  // Halaman benar-benar keluar layar => izinkan replay berikutnya
+  function isFullyOut(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.bottom <= 0 || rect.top >= window.innerHeight;
   }
 
   function scan() {
+    const now = performance.now();
     targets.forEach(el => {
       // Sebelum undangan dibuka, hanya cover yang beranimasi
       if (!isOpened && el.id !== 'cover') return;
 
-      if (isOnScreen(el)) {
-        if (!shown.has(el)) {
-          shown.add(el);
-          if (el.id === 'cover') {
-            if (window._coverTl) window._coverTl.restart();
-          } else {
-            playSection(el);
+      if (isMidVisible(el)) {
+        // Main hanya jika belum pernah dimainkan, atau sudah keluar layar,
+        // dan sudah lewat cooldown agar tidak restart di tengah scroll
+        if (!played.has(el) || el._replayReady) {
+          if (now - lastPlay > 400) {
+            played.add(el);
+            el._replayReady = false;
+            lastPlay = now;
+            if (el.id === 'cover') {
+              if (window._coverTl) window._coverTl.restart();
+            } else {
+              playSection(el);
+            }
           }
         }
-      } else {
+      } else if (isFullyOut(el)) {
         // Keluar layar => siap diputar ulang saat kembali
-        shown.delete(el);
+        el._replayReady = true;
       }
     });
   }
