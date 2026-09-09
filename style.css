@@ -108,12 +108,6 @@ body.locked {
   object-fit: contain;
   pointer-events: none;
   user-select: none;
-  
-  /* GPU acceleration & 60 FPS smoothness */
-  will-change: transform, opacity;
-  transform: translate3d(0, 0, 0);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
 }
 
 .bg-layer {
