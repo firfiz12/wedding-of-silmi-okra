@@ -155,28 +155,44 @@ function getSheet() {
   return sheet;
 }
 
-// Render kartu ucapan dalam HTML agar bisa ditampilkan di dalam iframe undangan
+// Render kartu ucapan dalam HTML agar bisa ditampilkan di dalam iframe undangan.
+// Gaya menyesuaikan tema undangan (burgundy, gold, cream) dan font ProvidenceSans.
 function renderFeed() {
   var sheet = getSheet();
   var values = sheet.getDataRange().getValues();
   var out = [];
-  out.push('<div style="font-family:Arial,Helvetica,sans-serif;max-width:420px;margin:0 auto;padding:8px;">');
+  out.push('<style>');
+  out.push('@font-face{font-family:"ProvidenceSans";src:url("https://firfiz12.github.io/wedding-of-silmi-okra/Providence-Sans.otf") format("opentype");font-display:swap;}');
+  out.push('*{box-sizing:border-box;margin:0;padding:0;}');
+  out.push('body{font-family:"ProvidenceSans","Comic Sans MS",cursive,sans-serif;background:transparent;}');
+  out.push('.feed{max-width:420px;margin:0 auto;padding:8px;}');
+  out.push('.card{background:#fffbf5;border:1px solid rgba(132,24,29,0.25);border-radius:12px;padding:12px 14px;margin:0 0 10px;box-shadow:0 4px 12px rgba(92,15,19,0.08);}');
+  out.push('.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;}');
+  out.push('.name{color:#84181d;font-size:15px;}');
+  out.push('.badge{color:#fff;font-size:11px;padding:2px 10px;border-radius:999px;white-space:nowrap;}');
+  out.push('.badge-hadir{background:#84181d;}');
+  out.push('.badge-ragu{background:#c59b27;}');
+  out.push('.badge-tidak{background:#5c0f13;}');
+  out.push('.msg{color:#3b2823;font-size:14px;line-height:1.5;}');
+  out.push('.empty{color:#7d655f;text-align:center;padding:12px;}');
+  out.push('</style>');
+  out.push('<div class="feed">');
   for (var i = values.length - 1; i >= 1; i--) {
     var name = values[i][1] || '';
     var status = values[i][2] || '';
     var msg = values[i][3] || '';
-    var badgeColor = status.indexOf('Tidak') !== -1 ? '#c0392b'
-      : status.indexOf('Ragu') !== -1 ? '#e67e22' : '#27ae60';
-    out.push('<div style="background:#fff;border:1px solid #f0e6dc;border-radius:12px;padding:12px 14px;margin:0 0 10px;box-shadow:0 2px 6px rgba(0,0,0,0.05);">');
-    out.push('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">');
-    out.push('<strong style="color:#7a2c31;">' + escapeHtml(name) + '</strong>');
-    out.push('<span style="color:#fff;font-size:11px;padding:2px 10px;border-radius:999px;background:' + badgeColor + ';">' + escapeHtml(status) + '</span>');
+    var badgeClass = status.indexOf('Tidak') !== -1 ? 'badge-tidak'
+      : status.indexOf('Ragu') !== -1 ? 'badge-ragu' : 'badge-hadir';
+    out.push('<div class="card">');
+    out.push('<div class="card-head">');
+    out.push('<strong class="name">' + escapeHtml(name) + '</strong>');
+    out.push('<span class="badge ' + badgeClass + '">' + escapeHtml(status) + '</span>');
     out.push('</div>');
-    out.push('<p style="margin:0 0 4px;color:#4a4a4a;font-size:14px;line-height:1.5;">' + escapeHtml(msg) + '</p>');
+    out.push('<p class="msg">' + escapeHtml(msg) + '</p>');
     out.push('</div>');
   }
   if (values.length <= 1) {
-    out.push('<p style="color:#999;text-align:center;">Belum ada ucapan. Jadilah yang pertama!</p>');
+    out.push('<p class="empty">Belum ada ucapan. Jadilah yang pertama!</p>');
   }
   out.push('</div>');
   return out.join('');

@@ -634,22 +634,23 @@ body.locked {
   top: 24px;
   left: 50%;
   transform: translateX(-50%);
-  background: #2e2423;
+  background: linear-gradient(180deg, var(--primary-burgundy) 0%, var(--primary-burgundy-dark) 100%);
   color: #ffffff;
   padding: 10px 22px;
   border-radius: 999px;
-  font-size: 0.88rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  font-size: 0.9rem;
+  font-family: var(--font-cute);
+  box-shadow: 0 10px 30px rgba(92, 15, 19, 0.45);
   display: flex;
   align-items: center;
   gap: 8px;
   z-index: 100000;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1.5px solid var(--accent-gold);
   transition: all 0.3s ease;
 }
 
 .toast i {
-  color: #4ade80;
+  color: var(--accent-gold);
 }
 
 .toast.hidden {
@@ -726,6 +727,7 @@ body.locked {
   font-weight: 600;
   letter-spacing: 0.2px;
   color: var(--text-muted);
+  font-family: var(--font-cute);
   white-space: nowrap;
 }
 
@@ -750,22 +752,33 @@ body.locked {
 }
 
 @media (max-width: 480px) {
+  .nav-dock {
+    max-width: calc(100vw - 12px);
+  }
+
   .nav-dock-inner {
     gap: 2px;
     padding: 6px 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
 
-  .nav-dock-item {
-    gap: 0;
-  }
-
-  .nav-dock-label {
+  .nav-dock-inner::-webkit-scrollbar {
     display: none;
   }
 
+  .nav-dock-item {
+    gap: 1px;
+    flex-shrink: 0;
+  }
+
+  .nav-dock-label {
+    font-size: 0.5rem;
+  }
+
   .nav-dock-icon {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
   }
 }
