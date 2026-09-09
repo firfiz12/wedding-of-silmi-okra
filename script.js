@@ -508,6 +508,13 @@ function initNavigationDock() {
 /* ==========================================================================
    8. RSVP FORM SUBMISSION & LOCALSTORAGE WISHES
    ========================================================================== */
+
+// URL Web App Google Apps Script untuk menyimpan data RSVP ke Google Sheets.
+// Isi dengan URL yang didapat saat Deploy > Manage deployments > Web app.
+// Contoh: 'https://script.google.com/macros/s/ABCDEF123/exec'
+// Biarkan kosong ('') jika belum diinisialisasi -> data hanya tersimpan di localStorage.
+const RSVP_SCRIPT_URL = '';
+
 window.handleRsvp = function(e) {
   e.preventDefault();
 
@@ -525,21 +532,36 @@ window.handleRsvp = function(e) {
     return;
   }
 
+  const rsvpData = {
+    name,
+    status,
+    msg,
+    timestamp: new Date().toISOString()
+  };
+
   // Button loading state
   submitBtn.disabled = true;
   submitBtn.innerHTML = `<span>Mengirim...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
-  setTimeout(() => {
+  // Kirim ke Google Spreadsheet (jika URL sudah di-set), lalu tampilkan hasil.
+  // Selalu berhasil secara lokal walau pengiriman ke Sheets gagal / belum di-set.
+  const sendToSheet = RSVP_SCRIPT_URL
+    ? fetch(RSVP_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(rsvpData)
+      })
+      .then(() => ({ ok: true }))
+      .catch(() => ({ ok: false }))
+    : Promise.resolve({ ok: true });
+
+  sendToSheet.finally(() => {
     // Add to wishes list
     addWishToBoard(name, status, msg, 'Baru saja');
 
     // Save to LocalStorage
-    saveWishLocally({
-      name,
-      status,
-      msg,
-      timestamp: new Date().toISOString()
-    });
+    saveWishLocally(rsvpData);
 
     // Reset inputs
     msgInput.value = '';
@@ -551,7 +573,7 @@ window.handleRsvp = function(e) {
     }, 2500);
 
     showToast(`Terima kasih ${name}! Konfirmasi kehadiran Anda berhasil dikirim.`);
-  }, 600);
+  });
 };
 
 function addWishToBoard(name, status, msg, timeStr) {

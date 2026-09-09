@@ -88,3 +88,70 @@ Buka terminal dan jalankan server lokal:
 npx http-server . -p 8080 -c-1
 ```
 Buka browser di `http://localhost:8080/?to=Sahabat+Tersayang`.
+
+---
+
+## 📊 Menyimpan Data RSVP ke Google Sheets
+
+Form RSVP dapat menyimpan data tamu (Nama, Status Kehadiran, Ucapan, Waktu) ke **Google Spreadsheet** menggunakan **Google Apps Script**, tanpa perlu server/backend.
+
+### Langkah 1 — Buat Google Spreadsheet
+1. Buka **sheets.new** lalu buat sheet baru.
+2. Beri nama sheet **`RSVP`** (atau sesuaikan di kode).
+3. Isi baris pertama (header) dengan:
+   `Timestamp | Nama | Status | Ucapan`
+
+### Langkah 2 — Buat Google Apps Script
+1. Di Spreadsheet: menu **Extensions → Apps Script**.
+2. Hapus isi editor, lalu tempel kode berikut:
+
+```javascript
+function doPost(e) {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('RSVP');
+
+  // Jika sheet 'RSVP' belum ada, buat otomatis dengan header
+  if (!sheet) {
+    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet('RSVP');
+    sheet.appendRow(['Timestamp', 'Nama', 'Status', 'Ucapan']);
+  }
+
+  var data;
+  try {
+    data = JSON.parse(e.postData.contents);
+  } catch (err) {
+    return ContentService.createTextOutput('Invalid JSON').setMimeType(ContentService.MimeType.TEXT);
+  }
+
+  sheet.appendRow([
+    new Date().toISOString(),
+    data.name || '',
+    data.status || '',
+    data.msg || ''
+  ]);
+
+  return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
+}
+```
+
+3. Klik **Saving** (ikon 💾). Pastikan nama function adalah **`doPost`**.
+
+### Langkah 3 — Deploy sebagai Web App
+1. Klik **Deploy → New deployment**.
+2. Pilih type **Web app**.
+3. **Execute as:** *Me*
+4. **Who has access:** *Anyone* (agar bisa diakses semua tamu yang membuka link undangan).
+5. Klik **Deploy**, lalu **Authorize access** (buka menu akun, pilih akun Anda, klik **Advanced** → **Go to ... (unsafe)** bila perlu).
+6. Salin **Web app URL** (berakhiran `/exec`), contoh: `https://script.google.com/macros/s/ABCDEF123/exec`.
+
+### Langkah 4 — Pasang URL di Script
+1. Buka [script.js](script.js), cari:
+   ```javascript
+   const RSVP_SCRIPT_URL = '';
+   ```
+2. Isi dengan URL Web App, menjadi:
+   ```javascript
+   const RSVP_SCRIPT_URL = 'https://script.google.com/macros/s/ABCDEF123/exec';
+   ```
+3. Commit & push. Deploy otomatis dilakukan oleh GitHub Pages (Deploy from a branch).
+
+> **Catatan:** Jika `RSVP_SCRIPT_URL` dibiarkan kosong, form RSVP tetap berfungsi dan data hanya disimpan di `localStorage` browser tamu (perilaku semula). Setelah diisi URL, data juga masuk ke Google Sheets.
