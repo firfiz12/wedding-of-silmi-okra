@@ -513,7 +513,7 @@ function initNavigationDock() {
 // Isi dengan URL yang didapat saat Deploy > Manage deployments > Web app.
 // Contoh: 'https://script.google.com/macros/s/ABCDEF123/exec'
 // Biarkan kosong ('') jika belum diinisialisasi -> data hanya tersimpan di localStorage.
-const RSVP_SCRIPT_URL = '';
+const RSVP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPnV9QaODrUr9lqywp6tr3EVLdmQ-B8-oBzVSnAsIKppvZAEc10ubk5oICvnj3xwwRTA/exec';
 
 window.handleRsvp = function(e) {
   e.preventDefault();
