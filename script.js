@@ -50,6 +50,12 @@ function initGuestPersonalization() {
     if (nameInput) {
       nameInput.value = cleanName;
     }
+    // Overlay nama tamu di cover (menggantikan teks PNG p1-recip-name)
+    const recipName = document.querySelector('.recipient-name-inner');
+    if (recipName) {
+      recipName.textContent = cleanName;
+      document.body.classList.add('has-recipient-name');
+    }
   }
 }
 
@@ -84,6 +90,7 @@ function initCoverAnimation() {
       .set('.p1-date', { opacity: 0, x: -70 })
       .set('.p1-recip-label', { opacity: 0, x: -70 })
       .set('.p1-recip-name', { opacity: 0, x: -70 })
+      .set('.recipient-name-inner', { opacity: 0, x: -70 })
       .set(['.p1-btn-open', '.p1-btn-envelope'], { opacity: 0, scale: 0.6, transformOrigin: '50% 50%' })
 
       // 1. Background & Paper texture fades in & zooms out gently
@@ -154,7 +161,7 @@ function initCoverAnimation() {
         duration: 0.9,
         ease: 'power2.out'
       }, '-=0.25')
-      .to(['.p1-recip-label', '.p1-recip-name'], {
+      .to(['.p1-recip-label', '.p1-recip-name', '.recipient-name-inner'], {
         opacity: 1,
         x: 0,
         duration: 0.85,

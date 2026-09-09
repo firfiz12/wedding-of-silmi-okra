@@ -160,6 +160,36 @@ body.locked .inner-content {
   background-color: var(--paper-cream);
 }
 
+/* Overlay nama tamu dinamis (diganti ?to=, menggantikan teks PNG p1-recip-name) */
+.recipient-name {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 84.6%;
+  z-index: 11;
+  text-align: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+.recipient-name-inner {
+  display: inline-block;
+  max-width: 78%;
+  font-family: var(--font-cute);
+  color: #BD0000;
+  font-size: clamp(18px, 6.2vw, 34px);
+  line-height: 1.12;
+}
+
+.has-recipient-name .recipient-name {
+  display: block;
+}
+
+.has-recipient-name .p1-recip-name {
+  display: none;
+}
+
 /* Button pulse animation on cover */
 .p1-btn-open, .p1-btn-envelope {
   animation: buttonPulse 2.2s infinite ease-in-out;

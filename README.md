@@ -76,7 +76,7 @@ Buka [index.html](file:///d:/apps/Undangan%20silmi-okra/index.html) pada bagian 
 Cukup tambahkan parameter `?to=Nama+Tamu` di akhir URL link undangan:
 - Contoh: `https://domain-undangan.com/?to=Bapak+Joko+Wi`
 - Contoh: `https://domain-undangan.com/?to=Keluarga+Besar+Bpk.+Ahmad`
-- Nama tamu akan otomatis tercetak di cover depan dan otomatis terisi di kolom form RSVP!
+- Nama tamu akan otomatis tercetak sebagai teks dinamis di cover depan (menggantikan nama bawaan PNG) dan otomatis terisi di kolom form RSVP!
 
 ---
 

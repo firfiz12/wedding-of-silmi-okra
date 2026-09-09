@@ -115,6 +115,8 @@ const fullHtml = `<!DOCTYPE html>
 ${page1Imgs}
       <!-- Hotspot Tombol Buka Undangan -->
       <button class="hotspot-btn hotspot-open" id="btn-open-invitation" aria-label="Buka Undangan"></button>
+      <!-- Overlay Nama Tamu Dinamis (menggantikan teks PNG saat ?to= diberikan) -->
+      <span class="recipient-name" id="recipient-name"><span class="recipient-name-inner"></span></span>
     </section>
 
     <!-- ================= INNER CONTENT ================= -->
