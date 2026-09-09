@@ -573,8 +573,19 @@ window.handleRsvp = function(e) {
     }, 2500);
 
     showToast(`Terima kasih ${name}! Konfirmasi kehadiran Anda berhasil dikirim.`);
+
+    // Reload feed ucapan global (iframe) agar ucapan baru langsung tampil
+    reloadWishesFeed();
   });
 };
+
+function reloadWishesFeed() {
+  const frame = document.querySelector('.live-wishes-frame');
+  if (!frame || !RSVP_SCRIPT_URL) return;
+  setTimeout(() => {
+    frame.src = RSVP_SCRIPT_URL + '?action=feed&r=' + Date.now();
+  }, 1200);
+}
 
 function addWishToBoard(name, status, msg, timeStr) {
   const wishesList = document.getElementById('wishes-list');
