@@ -106,34 +106,92 @@ Form RSVP dapat menyimpan data tamu (Nama, Status Kehadiran, Ucapan, Waktu) ke *
 2. Hapus isi editor, lalu tempel kode berikut:
 
 ```javascript
+// ============================================================
+// AUTO-COMPLETAR: cukup tempel seluruh kode ini, lalu simpan & deploy.
+// ============================================================
+
+var SHEET_NAME = 'RSVP';
+var HEADERS = ['Timestamp', 'Nama', 'Status', 'Ucapan'];
+
+// Menyimpan data RSVP dari form (dipanggil via fetch POST dari script.js)
 function doPost(e) {
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('RSVP');
-
-  // Jika sheet 'RSVP' belum ada, buat otomatis dengan header
-  if (!sheet) {
-    sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet('RSVP');
-    sheet.appendRow(['Timestamp', 'Nama', 'Status', 'Ucapan']);
-  }
-
+  var sheet = getSheet();
   var data;
   try {
     data = JSON.parse(e.postData.contents);
   } catch (err) {
     return ContentService.createTextOutput('Invalid JSON').setMimeType(ContentService.MimeType.TEXT);
   }
-
   sheet.appendRow([
     new Date().toISOString(),
     data.name || '',
     data.status || '',
     data.msg || ''
   ]);
-
   return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
+}
+
+// Menampilkan feed ucapan semua tamu (dipanggil via iframe ?action=feed)
+function doGet(e) {
+  var action = (e && e.parameter && e.parameter.action) || '';
+  if (action === 'feed') {
+    return HtmlService.createHtmlOutput(renderFeed())
+      .setTitle('Ucapan & Doa Restu')
+      .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
+  }
+  return ContentService.createTextOutput('OK').setMimeType(ContentService.MimeType.TEXT);
+}
+
+function getSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+    sheet.appendRow(HEADERS);
+  }
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(HEADERS);
+  }
+  return sheet;
+}
+
+// Render kartu ucapan dalam HTML agar bisa ditampilkan di dalam iframe undangan
+function renderFeed() {
+  var sheet = getSheet();
+  var values = sheet.getDataRange().getValues();
+  var out = [];
+  out.push('<div style="font-family:Arial,Helvetica,sans-serif;max-width:420px;margin:0 auto;padding:8px;">');
+  for (var i = values.length - 1; i >= 1; i--) {
+    var name = values[i][1] || '';
+    var status = values[i][2] || '';
+    var msg = values[i][3] || '';
+    var badgeColor = status.indexOf('Tidak') !== -1 ? '#c0392b'
+      : status.indexOf('Ragu') !== -1 ? '#e67e22' : '#27ae60';
+    out.push('<div style="background:#fff;border:1px solid #f0e6dc;border-radius:12px;padding:12px 14px;margin:0 0 10px;box-shadow:0 2px 6px rgba(0,0,0,0.05);">');
+    out.push('<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">');
+    out.push('<strong style="color:#7a2c31;">' + escapeHtml(name) + '</strong>');
+    out.push('<span style="color:#fff;font-size:11px;padding:2px 10px;border-radius:999px;background:' + badgeColor + ';">' + escapeHtml(status) + '</span>');
+    out.push('</div>');
+    out.push('<p style="margin:0 0 4px;color:#4a4a4a;font-size:14px;line-height:1.5;">' + escapeHtml(msg) + '</p>');
+    out.push('</div>');
+  }
+  if (values.length <= 1) {
+    out.push('<p style="color:#999;text-align:center;">Belum ada ucapan. Jadilah yang pertama!</p>');
+  }
+  out.push('</div>');
+  return out.join('');
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }
 ```
 
-3. Klik **Saving** (ikon 💾). Pastikan nama function adalah **`doPost`**.
+3. Klik **Saving** (ikon 💾). Pastikan fungsi **`doPost`** dan **`doGet`** ada.
 
 ### Langkah 3 — Deploy sebagai Web App
 1. Klik **Deploy → New deployment**.
@@ -142,6 +200,8 @@ function doPost(e) {
 4. **Who has access:** *Anyone* (agar bisa diakses semua tamu yang membuka link undangan).
 5. Klik **Deploy**, lalu **Authorize access** (buka menu akun, pilih akun Anda, klik **Advanced** → **Go to ... (unsafe)** bila perlu).
 6. Salin **Web app URL** (berakhiran `/exec`), contoh: `https://script.google.com/macros/s/ABCDEF123/exec`.
+
+> **Penting:** Setelah Anda mengganti/memperbarui kode Apps Script, **Deploy ulang** dengan **Deploy → Manage deployments → Edit (pensil) → Version: New version → Deploy**. URL `/exec` akan tetap sama.
 
 ### Langkah 4 — Pasang URL di Script
 1. Buka [script.js](script.js), cari:
@@ -154,4 +214,13 @@ function doPost(e) {
    ```
 3. Commit & push. Deploy otomatis dilakukan oleh GitHub Pages (Deploy from a branch).
 
-> **Catatan:** Jika `RSVP_SCRIPT_URL` dibiarkan kosong, form RSVP tetap berfungsi dan data hanya disimpan di `localStorage` browser tamu (perilaku semula). Setelah diisi URL, data juga masuk ke Google Sheets.
+### Langkah 5 — Aktifkan Panel Ucapan Global (Live)
+Panel "Ucapan dari Semua Tamu" ditampilkan lewat **iframe** yang memuat `URL/exec?action=feed`. Di [index.html](index.html), cari:
+```html
+<iframe class="live-wishes-frame"
+        src="https://script.google.com/macros/s/ABCDEF123/exec?action=feed"
+        title="Ucapan dari Semua Tamu"></iframe>
+```
+Ganti `src` dengan URL Web App Anda + `?action=feed`. Commit & push.
+
+> **Catatan:** Jika `RSVP_SCRIPT_URL` dibiarkan kosong, form RSVP tetap berfungsi dan data hanya disimpan di `localStorage` browser tamu (perilaku semula). Setelah diisi URL, data juga masuk ke Google Sheets dan tampil di panel ucapan global.
