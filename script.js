@@ -357,9 +357,11 @@ function initScrollAnimations() {
   if (coverEl) targets.push(coverEl);
   document.querySelectorAll('.page-section').forEach(el => targets.push(el));
 
-  // Halaman yang animasinya sudah/kondisi replay
+  // Halaman yang sudah dimainkan animasinya (hanya sekali, saat scroll ke bawah pertama)
   const played = new WeakSet();
   let lastPlay = 0;
+  // Deteksi arah scroll: animasi masuk hanya diputar saat scroll ke bawah pertama
+  let lastScrollY = null;
 
   // Bagian tengah halaman sudah masuk layar => siap diputar
   function isMidVisible(el) {
@@ -368,36 +370,28 @@ function initScrollAnimations() {
     return mid > 0 && mid < window.innerHeight;
   }
 
-  // Halaman benar-benar keluar layar => izinkan replay berikutnya
-  function isFullyOut(el) {
-    const rect = el.getBoundingClientRect();
-    return rect.bottom <= 0 || rect.top >= window.innerHeight;
-  }
-
   function scan() {
     const now = performance.now();
+    const scrollY = Math.max(0, window.scrollY || 0);
+    const scrollingDown = lastScrollY === null || scrollY >= lastScrollY;
+    lastScrollY = scrollY;
+
     targets.forEach(el => {
       // Sebelum undangan dibuka, hanya cover yang beranimasi
       if (!isOpened && el.id !== 'cover') return;
 
-      if (isMidVisible(el)) {
-        // Main hanya jika belum pernah dimainkan, atau sudah keluar layar,
-        // dan sudah lewat cooldown agar tidak restart di tengah scroll
-        if (!played.has(el) || el._replayReady) {
-          if (now - lastPlay > 400) {
-            played.add(el);
-            el._replayReady = false;
-            lastPlay = now;
-            if (el.id === 'cover') {
-              if (window._coverTl) window._coverTl.restart();
-            } else {
-              playSection(el);
-            }
+      // Animasi hanya diputar sekali: saat halaman masuk layar pertama kali
+      // dengan arah scroll ke bawah. Kembali ke halaman mana pun tidak replay.
+      if (isMidVisible(el) && scrollingDown && !played.has(el)) {
+        if (now - lastPlay > 400) {
+          played.add(el);
+          lastPlay = now;
+          if (el.id === 'cover') {
+            if (window._coverTl) window._coverTl.restart();
+          } else {
+            playSection(el);
           }
         }
-      } else if (isFullyOut(el)) {
-        // Keluar layar => siap diputar ulang saat kembali
-        el._replayReady = true;
       }
     });
   }
