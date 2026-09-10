@@ -75,6 +75,8 @@ body.locked .site-wrapper {
 body.locked .cover-container {
   flex: none;
   margin: auto 0;
+  max-height: 100vh;
+  max-height: 100dvh;
 }
 
 body.locked .inner-content {
