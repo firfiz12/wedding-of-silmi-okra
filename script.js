@@ -55,6 +55,13 @@ function initGuestPersonalization() {
     if (recipName) {
       recipName.textContent = cleanName;
       document.body.classList.add('has-recipient-name');
+
+      // Opsi 2: Auto-shrink dinamis jika nama tamu panjang atau terdiri dari gelar / & Keluarga
+      if (cleanName.length > 32) {
+        document.body.classList.add('has-extra-long-recipient-name');
+      } else if (cleanName.length > 20) {
+        document.body.classList.add('has-long-recipient-name');
+      }
     }
   }
 }
