@@ -32,8 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 7. Setup Auto-hide Page Navigation Dock
   initNavigationDock();
 
-  // 8. Load Stored RSVP Wishes from LocalStorage
-  loadSavedWishes();
+  
 });
 
 /* ==========================================================================
@@ -588,12 +587,6 @@ window.handleRsvp = function(e) {
     : Promise.resolve({ ok: true });
 
   sendToSheet.finally(() => {
-    // Add to wishes list
-    addWishToBoard(name, status, msg, 'Baru saja');
-
-    // Save to LocalStorage
-    saveWishLocally(rsvpData);
-
     // Reset inputs
     msgInput.value = '';
     submitBtn.disabled = false;
@@ -616,74 +609,6 @@ function reloadWishesFeed() {
   setTimeout(() => {
     frame.src = RSVP_SCRIPT_URL + '?action=feed&r=' + Date.now();
   }, 1200);
-}
-
-function addWishToBoard(name, status, msg, timeStr) {
-  const wishesList = document.getElementById('wishes-list');
-  const countEl = document.getElementById('wishes-count');
-  if (!wishesList) return;
-
-  let badgeClass = 'badge-hadir';
-  if (status === 'Ragu-ragu') badgeClass = 'badge-ragu';
-  else if (status.includes('Tidak')) badgeClass = 'badge-tidak';
-
-  const item = document.createElement('div');
-  item.className = 'wish-item';
-  item.style.animation = 'fadeInUp 0.5s ease forwards';
-  item.innerHTML = `
-    <div class="wish-header">
-      <strong class="wish-author cute-font">${escapeHtml(name)}</strong>
-      <span class="wish-badge ${badgeClass}">${escapeHtml(status)}</span>
-    </div>
-    <p class="wish-text">${escapeHtml(msg)}</p>
-    <span class="wish-time">${timeStr}</span>
-  `;
-
-  wishesList.insertBefore(item, wishesList.firstChild);
-
-  if (countEl) {
-    const currentCount = parseInt(countEl.textContent || '0', 10);
-    countEl.textContent = (currentCount + 1).toString();
-  }
-}
-
-function saveWishLocally(wish) {
-  try {
-    const existing = JSON.parse(localStorage.getItem('silmi_okra_wishes') || '[]');
-    existing.unshift(wish);
-    localStorage.setItem('silmi_okra_wishes', JSON.stringify(existing));
-  } catch (err) {
-    console.warn('LocalStorage error:', err);
-  }
-}
-
-function loadSavedWishes() {
-  try {
-    const saved = JSON.parse(localStorage.getItem('silmi_okra_wishes') || '[]');
-    saved.forEach(w => {
-      const timeDiff = getTimeAgo(new Date(w.timestamp));
-      addWishToBoard(w.name, w.status, w.msg, timeDiff);
-    });
-  } catch (err) {
-    console.warn('Error loading saved wishes:', err);
-  }
-}
-
-function getTimeAgo(date) {
-  const seconds = Math.floor((new Date() - date) / 1000);
-  if (seconds < 60) return 'Baru saja';
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes} menit yang lalu`;
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours} jam yang lalu`;
-  const days = Math.floor(hours / 24);
-  return `${days} hari yang lalu`;
-}
-
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 /* ==========================================================================
