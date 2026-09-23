@@ -9,7 +9,7 @@ const missing = [];
 const found = [];
 
 while ((match = regex.exec(html)) !== null) {
-  const file = match[1];
+  let file = match[1].split('?')[0];
   if (file.startsWith('http') || file.startsWith('#') || file.startsWith('mailto:') || file.startsWith('tel:')) continue;
   if (fs.existsSync(file)) {
     found.push(file);

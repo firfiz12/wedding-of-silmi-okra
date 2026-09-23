@@ -10,6 +10,7 @@ let isOpened = false;
 document.addEventListener('DOMContentLoaded', () => {
   // Scroll dikunci sampai "Buka Undangan" diklik
   document.body.classList.add('locked');
+  document.documentElement.classList.add('locked');
 
   // 1. Personalize Guest Name from URL (?to=Nama+Tamu)
   initGuestPersonalization();
@@ -202,6 +203,7 @@ function initOpenInvitation() {
     // Buka undangan: aktifkan scroll, tampilkan kontrol audio,
     // lalu scroll mulus ke halaman berikutnya.
     document.body.classList.remove('locked');
+    document.documentElement.classList.remove('locked');
     isOpened = true;
     if (audioFloating) audioFloating.classList.remove('hidden');
 
